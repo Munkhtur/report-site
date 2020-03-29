@@ -1,0 +1,5 @@
+Posts
+create , get all, get all title, get by slug,  delete
+
+Category
+create, get all, get one and blogs, delete
