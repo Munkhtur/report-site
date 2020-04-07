@@ -10,6 +10,13 @@ import { Provider } from 'react-redux'; // gets the two seperate stuff together
 import store from './store';
 import { loaduser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
+import Dashboard from './component/dashboard/Dashboard';
+import PrivateRoute from './component/routing/PrivateRoute';
+import Posts from './component/posts/Posts';
+import CreatePost from './component/posts/post-form/CreatePost';
+import UpdatePost from './component/posts/post-form/UpdatePost';
+import Post from './component/post/Post';
+import CategorizedPosts from './component/posts/CategorizedPosts';
 
 import './App.css';
 
@@ -27,11 +34,25 @@ const App = () => {
         <Fragment>
           <Navbar />
           <Route exact path='/' component={Landing} />
-          <div className='container'>
+          <div className='main-container'>
             <Alert />
             <Switch>
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
+              <Route exact path='/posts' component={Posts} />
+              <Route exact path='/posts/:slug' component={Post} />
+              <Route
+                exact
+                path='/posts/category/:id'
+                component={CategorizedPosts}
+              />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <PrivateRoute exact path='/create-post' component={CreatePost} />
+              <PrivateRoute
+                exact
+                path='/update-post/:slug'
+                component={UpdatePost}
+              />
             </Switch>
           </div>
         </Fragment>

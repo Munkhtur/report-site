@@ -2,27 +2,27 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
-title:{
-    type:String,
-    required: true
-},
-slug:{
+  title: {
     type: String,
-        index: true,
-        unique: true
-},
-excerpt:{
+    required: true
+  },
+  slug: {
+    type: String,
+    index: true,
+    unique: true
+  },
+  excerpt: {
     type: String
-},
+  },
   text: {
     type: String,
     required: true
   },
-  categories:[{type: mongoose.Schema.Types.ObjectId, ref: 'category'}],
+  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'category' }],
   image: {
     data: Buffer,
     contentType: String
-},
+  },
 
   date: {
     type: Date,

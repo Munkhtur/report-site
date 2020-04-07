@@ -63,7 +63,11 @@
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
-  margin-top: 6rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+.main-container {
+  margin-top: 5rem;
   margin-bottom: 3rem;
 }
 .x-large {
@@ -187,8 +191,16 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
 }
+
 .date {
-  margin-top: -1.5rem;
+  margin-top: -2rem;
+  font-size: 2rem;
+  color: #464647;
+}
+.post-form-grid {
+  display: grid;
+  grid-template-columns: 4fr 2fr;
+  gap: 2rem;
 }
 .form-group {
   margin: 1.2rem 0;
@@ -197,6 +209,9 @@
   display: block;
   margin-top: 0.3rem;
   color: #888;
+}
+.category-list li {
+  display: inline;
 }
 .form input[type='text'],
 .form input[type='date'],
@@ -223,12 +238,15 @@ body {
   font-family: 'Raleway', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: #fff;
+  background-color: rgba(117, 117, 110, 0.13);
   color: #333;
 }
 a {
-  color: #17a2b8;
+  color: #4c6e74;
   text-decoration: none;
+}
+a:hover {
+  color: rgb(62, 64, 66);
 }
 ul {
   list-style: none;
@@ -276,6 +294,7 @@ img {
   background: url('./img/showcase.jpg') no-repeat center center/cover;
   height: 100vh;
 }
+
 .landing-inner {
   color: #fff;
   height: 100%;
@@ -315,7 +334,10 @@ img {
   -ms-grid-row: 2;
   -ms-grid-column: 1;
   grid-area: side;
+  font-size: 1.5rem;
+  padding-left: -30px;
 }
+
 .posts-grid .posts-list {
   -ms-grid-row: 2;
   -ms-grid-column: 2;
@@ -333,15 +355,28 @@ img {
   padding: 1rem;
   line-height: 1.8;
   margin-bottom: 2rem;
+  transition: 0.5s;
+}
+.post:hover {
+  box-shadow: 0px 0px 5px #252524;
 }
 .post img {
   min-width: 200px;
 }
+
+.posts-top {
+  background: url('./img/boat.jpg') no-repeat center center/cover;
+  width: 100%;
+  height: 500px;
+  align-content: end;
+  margin-top: -7rem;
+  padding: 10rem 5rem 0;
+}
 .dash-grid {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 3fr 2fr;
-  grid-template-columns: 3fr 2fr;
+  -ms-grid-columns: 1fr;
+  grid-template-columns: 1fr;
   gap: 2rem;
 }
 .post-title {
@@ -351,7 +386,9 @@ img {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  padding: 1rem;
 }
+
 .cat-name {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -359,6 +396,29 @@ img {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+}
+
+.cat-menu {
+  text-transform: uppercase;
+  font-weight: 100;
+  text-align: right;
+}
+.cat-menu li:hover {
+  color: black;
+}
+
+.post-header {
+  display: grid;
+  background: url('./img/boat.jpg') no-repeat center center/cover;
+  width: 100%;
+  height: 500px;
+  align-content: end;
+  margin-top: -7rem;
+  padding: 10rem 5rem 0;
+}
+
+.ql-editor {
+  min-height: 300px;
 }
 @media (max-width: 700px) {
   .hide-sm {
