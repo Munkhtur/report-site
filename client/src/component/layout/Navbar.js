@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
+import logo from '../../img/favicon.png';
 
 const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
   const authLinks = (
@@ -27,10 +28,7 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
         <Link to='/posts'>Posts</Link>
       </li>
       <li>
-        <Link to='#!'>About</Link>
-      </li>
-      <li>
-        <Link to='/login'>Login</Link>
+        <Link to='/about'>About</Link>
       </li>
     </ul>
   );
@@ -38,7 +36,11 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
     <nav className='navbar bg-dark'>
       <h1>
         <Link to='/'>
-          <i className='fas fa-code'></i> DevConnector
+          <i className='fas fa-bookmark'>
+            {/* <img style={{ width: '40px' }} src={logo} /> */}
+          </i>
+          {'   '}
+          The Report
         </Link>
       </h1>
       {!loading && (
@@ -50,11 +52,11 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
 
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);

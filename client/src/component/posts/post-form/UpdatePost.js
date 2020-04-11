@@ -18,13 +18,14 @@ const UpdatePost = ({
   getCategories,
   match,
 }) => {
+  const [temp, setTemp] = useState([]);
   const [checked, setChecked] = useState([]);
   const [text, setText] = useState('');
   const [values, setValues] = useState({
     title: '',
     image: '',
     categories: [],
-    formData: '',
+    formData: new FormData(),
   });
 
   const { title, formData } = values;
@@ -33,20 +34,14 @@ const UpdatePost = ({
   useEffect(() => {
     getPost(match.params.slug);
     console.log(post.title);
-    //console.log(arr);
+    // setTemp(post.categories);
     setChecked(post.categories);
-    handleToggle();
     setValues({ ...values, title: post.title });
-    setValues({ ...values, formData: new FormData() });
     setText(post.text);
-  }, [loading, getPost, match.params.slug]);
-
-  console.log(checked);
-  console.log(text);
-
+  }, [getPost, match.params.slug]);
   const onChange = (e) => {
     setValues({ ...values, formData, [e.target.name]: e.target.value });
-    formData.set(e.target.name, e.target.values);
+    formData.set('title', e.target.value);
   };
   const onSubmit = (e) => {
     e.preventDefault();
@@ -54,7 +49,6 @@ const UpdatePost = ({
   };
 
   const handleChange = (e) => {
-    console.log(e);
     setText(e);
     formData.set('text', e);
   };
@@ -66,9 +60,10 @@ const UpdatePost = ({
   };
 
   const handleToggle = (c) => () => {
+    // console.log(temp);
+    //console.log(newArray);
     // setChecked(checked);
     //const all = [...checked];
-
     const clickedCategory = checked.findIndex((x) => x._id === c._id);
     console.log(clickedCategory, 'index of');
     //console.log(all, 'before push');
@@ -77,25 +72,13 @@ const UpdatePost = ({
     } else {
       checked.splice(clickedCategory, 1);
     }
-    // console.log(all, 'after push');
-    // setChecked(all);
     console.log(checked, 'checked');
-    setValues({ ...values, formData, categories: checked });
-    formData.set('categories', checked);
+    let arr = [];
+    arr = checked.map((x) => x._id);
+    console.log(arr);
+    setValues({ ...values, formData, categories: arr });
+    formData.set('categories', arr);
   };
-
-  // const findOutCategories = c => {
-  //   const all = [...checked];
-  //   const result = all.findIndex(x => x._id === c);
-  //   console.log(result, 'result');
-  //   if (result !== -1) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
-
-  //console.log(formData.categories);
 
   const isChecked = (c) => {
     if (checked.findIndex((x) => x._id === c._id) > -1) {

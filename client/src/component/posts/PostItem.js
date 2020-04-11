@@ -1,11 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
-import exampleImage from '../../img/boat.jpg';
 import renderHtml from 'react-render-html';
-import { useEffect } from 'react';
+
 const PostItem = ({
   post: { _id, title, excerpt, date, categories, slug },
 }) => {

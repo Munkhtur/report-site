@@ -13,10 +13,13 @@ import setAuthToken from './utils/setAuthToken';
 import Dashboard from './component/dashboard/Dashboard';
 import PrivateRoute from './component/routing/PrivateRoute';
 import Posts from './component/posts/Posts';
+import RecentPosts from './component/posts/RecentPosts';
 import CreatePost from './component/posts/post-form/CreatePost';
 import UpdatePost from './component/posts/post-form/UpdatePost';
 import Post from './component/post/Post';
 import CategorizedPosts from './component/posts/CategorizedPosts';
+import About from './component/layout/About';
+import NoMatch from './component/posts/NoMatch';
 
 import './App.css';
 
@@ -33,14 +36,16 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
-          <Route exact path='/' component={Landing} />
           <div className='main-container'>
             <Alert />
             <Switch>
+              <Route exact path='/' component={Landing} />
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/posts' component={Posts} />
+              <Route exact path='/posts/limit' component={RecentPosts} />
               <Route exact path='/posts/:slug' component={Post} />
+              <Route exact path='/about' component={About} />
               <Route
                 exact
                 path='/posts/category/:id'
@@ -53,6 +58,7 @@ const App = () => {
                 path='/update-post/:slug'
                 component={UpdatePost}
               />
+              <Route path='*' component={NoMatch} />
             </Switch>
           </div>
         </Fragment>

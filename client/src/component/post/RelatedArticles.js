@@ -30,11 +30,6 @@ const RelatedArticles = ({
       {posts.map((post) => (
         <PostItem key={post._id} post={post} />
       ))}
-      <p>
-        *****************************{JSON.stringify(postFromPost)}
-        *******************
-      </p>
-      <p>{JSON.stringify(posts.map((p) => p.title))}</p>
     </Fragment>
   );
 };

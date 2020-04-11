@@ -7,18 +7,18 @@ const CategorySchema = new Schema({
     trim: true,
     required: true,
     index: true,
-    max: 32
+    max: 32,
   },
 
   slug: {
     type: String,
-    unique: true
+    unique: true,
   },
 
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = Category = mongoose.model('category', CategorySchema);

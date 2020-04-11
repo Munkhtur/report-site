@@ -1,4 +1,4 @@
-import React, { useState, Fragment, Profiler, useEffect } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,90 +10,54 @@ import '../../../../node_modules/react-quill/dist/quill.snow.css';
 const CreatePost = ({
   category: { categories },
   post: { post },
-  isAuthenticated,
   createPost,
-  getPost,
   router,
   history,
 }) => {
-  const blogFromLS = () => {
-    if (typeof window === 'undefined') {
-      return false;
-    }
-    if (localStorage.getItem('blog')) {
-      return JSON.parse(localStorage.getItem('blog'));
-    } else {
-      return false;
-    }
-  };
-
   const [values, setValues] = useState({
     title: '',
-    text: blogFromLS(),
-    formData: '',
+    text: '',
+    formData: new FormData(),
     categories: [],
   });
 
-  const { title, text, formData } = values;
-  const [checked, setChecked] = useState([]);
-  const [body, setBody] = useState('');
-
-  useEffect(() => {
-    setValues({ ...values, formData: new FormData() });
-  }, [router]);
-
-  const onChange = (e) => {
-    formData.set(e.target.name, e.target.value);
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
+  const { title, formData } = values;
+  const [checked] = useState([]);
+  const [body, setBody] = useState('dskjlfljks');
 
   const onSubmit = (e) => {
     e.preventDefault();
     createPost(formData, history);
     setValues({ title: '', text: '', formData: '', categories: [] });
-    console.log(formData);
   };
-  // const handleToggle = (id, e) => () => {
-  //   let index;
-  //   if (e.target.checked) {
-  //     checked.push(id);
-  //   } else {
-  //     index = checked.indexOf(id);
-  //     checked.splice(index, 1);
-  //   }
+  const onChange = (e) => {
+    formData.set(e.target.name, e.target.value);
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
-  //   console.log(checked);
-  // };
   const handleImage = (e) => {
-    //setValues({ ...formData, image: e.target.files[0] });
     formData.set('image', e.target.files[0]);
-    console.log(e.target.files[0]);
   };
-  const handleChange = (value) => {
-    setBody(value);
-    // console.log(e)
-    formData.set('text', value);
-    // console.log(value);
+  const handleChange = (e) => {
+    setBody(e);
+    formData.set('text', e);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('blog', JSON.stringify(value));
+      localStorage.setItem('blog', JSON.stringify(e));
     }
   };
 
   const handleToggle = (c) => () => {
-    // const clickedCategory = e.target.checked;
-    const all = [...checked];
-    const clickedCategory = all.indexOf(c);
+    const clickedCategory = checked.indexOf(c);
     console.log(clickedCategory);
     if (clickedCategory === -1) {
-      all.push(c);
+      checked.push(c);
     } else {
-      all.splice(clickedCategory, 1);
+      checked.splice(clickedCategory, 1);
     }
-    setChecked(all);
+
     console.log(checked, 'checked');
-    console.log(all, 'all');
-    formData.set('categories', all);
-    //setValues({ ...values, formData, categories: all });
+    formData.set('categories', checked);
+    setValues({ ...values, formData, categories: checked });
   };
 
   // console.log(formData.categories);
@@ -101,15 +65,15 @@ const CreatePost = ({
   return (
     <Fragment>
       <div className='container post-form-grid'>
-        <form className='form' onSubmit={(e) => onSubmit(e)}>
+        <form className='form' onSubmit={onSubmit}>
           <h1>Create post</h1>
           <div className='form-group'>
             <input
-              value={title}
-              onChange={(e) => onChange(e)}
               type='text'
+              value={title}
               placeholder='Title'
               name='title'
+              onChange={onChange}
             />
           </div>
           {/* onChange={e => onChange(e)} */}
@@ -119,8 +83,8 @@ const CreatePost = ({
               formats={QuillFormats}
               value={body}
               name='text'
+              onChange={handleChange}
               placeholder='write'
-              onChange={(e) => handleChange(e)}
             />
           </div>
 
@@ -135,9 +99,9 @@ const CreatePost = ({
               Upload Image
               <input
                 name='image'
-                onChange={(e) => handleImage(e)}
                 type='file'
                 accept='image/*'
+                onChange={handleImage}
                 hidden
               />
             </label>
@@ -151,10 +115,10 @@ const CreatePost = ({
                     <li key={category._id}>
                       <label className=''>
                         <input
-                          onChange={handleToggle(category._id)}
                           type='checkbox'
                           className='mr-2'
                           value={category._id}
+                          onChange={handleToggle(category._id)}
                         />
                         {category.name}
                       </label>{' '}

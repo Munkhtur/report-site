@@ -114,12 +114,14 @@ router.put('/:slug', auth, async (req, res) => {
           error: 'Image could not upload',
         });
       }
-
+      let slugBeforeMerge = post.slug;
       post = _.merge(post, fields);
       const { text, categories, title } = fields;
+      post.slug = slugBeforeMerge;
 
+      console.log(fields, '***********');
       post.categories = categories.split(',');
-      post.slug = slugify(title).toLowerCase();
+      post.categories;
       post.excerpt = smartTrim(text, 320, ' ', '...');
 
       if (files.image) {
@@ -154,6 +156,26 @@ router.get('/', async (req, res) => {
   }
 });
 
+//@route GET api/posts with limit
+//@desc Get all posts
+//@access Public
+
+router.post('/limited', async (req, res) => {
+  let limit = req.body.limit ? parseInt(req.body.limit) : 3;
+  let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+  try {
+    const posts = await Post.find()
+      .sort({ date: -1 })
+      .limit(limit)
+      .skip(skip)
+      .select('-image -text');
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(400).send('Server error');
+  }
+});
+
 //@route GET api/posts/:id
 //@desc Get a single post by id
 //@access Public
@@ -162,7 +184,7 @@ router.get('/:slug', async (req, res) => {
   try {
     const post = await Post.findOne({ slug: req.params.slug }).populate(
       'categories',
-      '_id name slug'
+      '_id'
     );
 
     if (!post) {
@@ -271,7 +293,7 @@ router.get('/image/:slug', async (req, res) => {
     res.set('Content-Type', post.image.contentType);
     return res.send(post.image.data);
   } catch (err) {
-    console.error(err.message);
+    console.error(err.message, 'get image');
     res.status(400).send('Server error');
   }
 });
