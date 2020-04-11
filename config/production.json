@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://turu123:turu123@cluster0-vadct.mongodb.net/blog?retryWrites=true&w=majority",
+  "jwtSecret": "kjfhaerhfwnjrfuahfjkldslcjas"
+}
